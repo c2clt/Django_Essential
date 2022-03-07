@@ -170,6 +170,99 @@
     ```
 
 
+## Template
+* Template Syntax
+    ```html
+    {{ variable }}
+    {% tag %}
+    {{ variable|filter }}
+    ```
+    ```html
+    <!-- In adoptions/templates/pet_detail.html -->
+    <h3>{{ pet.name }}</h3>
+    <h3>{{ pet.name|capfirst }}</h3>
+    <!-- Resulting HTML -->
+    <h3>Scooter</h3>
+    ```
+
+* Template Loops
+    ```html
+    <!-- adoptions/templates/home.html -->
+    {% for pet in pets %}
+        <li>{{ pet.name }}</li>
+    {% endfor %}
+
+    <!-- Resulting HTML-->
+    <li>Scooter</li>
+    <li>Pepe</li>
+    ```
+* URL Tag
+    ```python
+    # In wisdompets/urls.py
+    urlpatterns = [
+        path('', views.home, name='home'),
+        path('adoptions/<int:pet_id>', views.pet_detail, name='pet_detail'),
+    ]
+    ```
+
+    ```html
+    <!-- In adoptions/templates/home.html -->
+    {% url 'home' %}
+    <!-- Resulting html -->
+    /
+
+    <!-- In adoptions/templates/pet_detail.html -->
+    {% url 'pet_detail' pet_id %}
+    <!-- Resulting html -->
+    /adoptions/1/
+    ```
+* Put all Syntax together
+    ```html
+    <ul>
+        {% for pet in pets %}
+        <li>
+            <a href="{% url 'pet_detail' pet_id %}">
+                {{ pet.name|capfirst }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Resulting HTML -->
+    <ul>
+        <li><a href="/adoptions/1"></a>Pepe</li>
+        <li><a href="/adoptions/2"></a>Scooter</li>
+    </ul>
+    ```
+* Inheritance: base.html
+    ```html
+    <!doctype html>
+    <html>
+        <head>
+            <!-- meta tags and so on... -->
+        </head>
+
+        <body>
+            {% block content %}
+            {% endblock content %}
+        </body>
+    </html>
+    ```
+* Inheritance: home.html
+    ```html
+    {% extends "base.html" %}
+
+    {% black content %}
+        <h3>Animals available for adoptions</h3>
+        <!-- more content ... -->
+    {% endblock content%}
+
+## Integrate CSS and JavaScript
+* Add in JavaScript
+* Address loading CSS and images
+* Called "static files" in Django
+
+
 
 
 
