@@ -149,6 +149,27 @@
     ```
 * unapplied Migartions: when a migartion file has been created, but hasn't been run
 
+## Django URL patterns
+* URL patterns: Matching Procedure
+    * Path converter - a pattern string (e.g. *path('adoptions/<int:pet_id>/', ...)*)
+        * Strings match literally, such as adoptions/
+        * "capture group" - inside of <> for variables
+        * int - path converter
+        * pet_id - keyword argument
+    * View to use
+    * Name (optional; used to create links)
+    ```python
+    # Checks each pattern in order
+    # If the pattern matches, that view is called
+    # Otherwise, continues to the next pattern
+    # If there is no match, return HTTP 404
+    urlpatterns = [
+        path('', views.home, name='home')
+        path('adoptions/<int:pet_id>/', views.pet_details, name='pet_details'),
+    ]
+    ```
+
+
 
 
 
